@@ -1,7 +1,7 @@
 Geohash Mapper Module
 =====================
 
-This project is used to create a geohash heatmap GeoJSON collection from geoJSON points with a timestamp.
+This project is used to create a geohash heatmap GeoJSON collection from GeoJSON points with a timestamp.
 
 ---------------
 
