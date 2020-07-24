@@ -1,7 +1,8 @@
 Geohash Mapper Module
 =====================
 
-This project is used to create a geohash heatmap GeoJSON collection from GeoJSON points with a timestamp.
+This project is used to create a geohash heatmap GeoJSON collection file from input GeoJSON files that represent points 
+Points with a datestamp are supported and can be used to filter the heatmap aggregation temporally.
 
 ---------------
 
@@ -25,30 +26,26 @@ $ pip install -r requirements.txt
 
 ### Running the code
 
-A. Modify paths and time ranges in **main.py**
+A. Modify paths, query date ranges, geojson date field and formats in **main.py**
 - For example
-  - Input geojson files are in a folder called 'image_metadata'
-  - Output target file path is a file names 'geohash_denisty.geojson' in the 'output geojson' directory
-  - Start of time range is "2018-08-17 00:00:00 UTC"
-  - End of time range is "2018-08-20 00:00:00 UTC" 
-- Set the paths and time range as follows:
+  - Input geojson files are in a folder called 'sample_data'
+  - Output target file path is a file names 'geohash_denisty.geojson' in the 'sample_data' directory
+  - Start of date range is "2012-01-20 UTC"
+  - End of date range is "2013-10-20 UTC"
+  - Input date field is "COLLISION_"
+  - Input date format is "%Y-%m-%d" 
+- These are set as follows:
 ```
-image_metadata_dir = os.path.join(os.path.dirname(os.getcwd()), r'image_metadata')
-output_geojson_path = os.path.join(
-    os.path.dirname(os.getcwd()), r'output_geojson', r'geohash_density.geojson')
-START_TIME = "2018-08-20 00:00:00 UTC"
-END_TIME = "2018-08-21 00:00:00 UTC"
+input_geojson_dir = os.path.join(os.getcwd(), r'sample_data')
+output_geojson_path = os.path.join(os.getcwd(), r'sample_data', r'geohash_density.geojson')
+START_DATE = "2012-01-20 UTC" 
+END_DATE = "2013-10-20 UTC" 
+INPUT_DATE_FIELD = "COLLISION_" 
+INPUT_DATE_FORMAT = "%Y-%m-%d" 
 ```
 B. Run main.py
 ```
 $ python main.py
-```
-
-## Running the tests
-
-Run the unit tests that test the functionality of this module
-```
-$ python sanity_test.py
 ```
 
 ## Accessing doc

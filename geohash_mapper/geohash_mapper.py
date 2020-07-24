@@ -6,6 +6,7 @@ import os
 from collections import Counter
 import logging
 from multiprocessing import current_process
+from datetime import datetime
 import geohash
 import pandas as pd
 import geopandas as gpd
@@ -14,12 +15,14 @@ import seaborn as sns
 logger = logging.getLogger(__name__)
 
 
-def read_geojson_metadata(geojson_file, start_epoch, end_epoch):
+def read_geojson_metadata(geojson_file, start_epoch, end_epoch, date_field, date_format):
     """Reads metadata from geojson file from an input directory
     and returns a list of wkt strings for points within the given time range
-        :param geojson_file: directory with input metadata geojson files
+        :param geojson_file: input geojson file
         :param start_epoch: start of time range in epoch
         :param end_epoch: end of time range in epoch
+        :param date_field: The field in the geojson file that represents the date
+        :param date_format: The date format of the date field
         :return: list of wkt strings for points within the given time range
     """
 
@@ -28,9 +31,16 @@ def read_geojson_metadata(geojson_file, start_epoch, end_epoch):
 
     point_wkt_list = []
 
-    image_metadata = gpd.read_file(geojson_file)
-    filter_geom = image_metadata[image_metadata['captured_on_epoch'] <= end_epoch]\
-        [image_metadata['captured_on_epoch'] >= start_epoch]['geometry']
+    point_metadata = gpd.read_file(geojson_file)
+
+    # Convert date to epoch time in local timezone, use 'tzinfo' if 'Aware' timezones are desired
+    point_date = [datetime.strptime(point_metadata[date_field][i], date_format).timestamp()
+                  for i in range(len(point_metadata[date_field]))]
+
+    point_metadata['captured_on_epoch'] = point_date
+
+    filter_geom = point_metadata[point_metadata['captured_on_epoch'] <= end_epoch]\
+        [point_metadata['captured_on_epoch'] >= start_epoch]['geometry']
     for pnt in filter_geom:
         point_wkt_list.append('{lat} {lon}'.format(lat=pnt.y, lon=pnt.x))
 

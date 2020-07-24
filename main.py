@@ -10,11 +10,12 @@ from multiprocessing import Pool, cpu_count
 from geohash_mapper.geohash_mapper import read_geojson_metadata, density_geohash
 
 #  Configure these prior to running
-image_metadata_dir = os.path.join(os.path.dirname(os.getcwd()), r'image_metadata')
-output_geojson_path = os.path.join(
-    os.path.dirname(os.getcwd()), r'output_geojson', r'geohash_density_08200821.geojson')
-START_TIME = "2018-08-20 00:00:00 UTC"
-END_TIME = "2018-08-21 00:00:00 UTC"
+input_geojson_dir = os.path.join(os.getcwd(), r'sample_data')
+output_geojson_path = os.path.join(os.getcwd(), r'sample_data', r'geohash_density.geojson')
+START_DATE = "2012-01-20 UTC" # Start time to aggregate points
+END_DATE = "2013-10-20 UTC" # End time to aggregate points
+INPUT_DATE_FIELD = "COLLISION_" # This is a data dependent field which represents the date associated with a point
+INPUT_DATE_FORMAT = "%Y-%m-%d" # This is data dependent format of the date field of the input
 
 # create a logger to report
 logger = logging.getLogger()
@@ -26,30 +27,25 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 if __name__ == "__main__":
-    logger.info("Reading GeoJSON metadata files...")
+    logger.info("Reading input GeoJSON files...")
 
-    # Convert start and end times to epoch
-    start_epoch = (datetime.strptime(START_TIME, "%Y-%m-%d %H:%M:%S %Z")
+    # Convert start and end dates to epoch
+    start_epoch = (datetime.strptime(START_DATE, "%Y-%m-%d %Z")
                    - datetime(1970, 1, 1)).total_seconds()
-    end_epoch = (datetime.strptime(END_TIME, "%Y-%m-%d %H:%M:%S %Z")
+    end_epoch = (datetime.strptime(END_DATE, "%Y-%m-%d %Z")
                  - datetime(1970, 1, 1)).total_seconds()
 
-    metadata_path = []
+    # Create a list of input file paths
+    input_geojson_paths = [os.path.join(os.getcwd(), r'sample_data', f)
+                           for f in os.listdir(input_geojson_dir) if f.endswith('.geojson')]
 
-    for filename in os.listdir(image_metadata_dir):
-        # 'file_start_time' is 'naive' datetime object that'll use local time.
-        # Run from Pacific region it should match SF AOI timezone.
-        # GeoJSON file names are assumed to be in Pacific timezone.
-        # To convert to 'aware', use 'tzinfo'.
-        file_start_time = datetime.strptime(filename.split('.')[0], "%Y%m%d").timestamp()
-        if (start_epoch < file_start_time + 86400) and (file_start_time < end_epoch):
-            metadata_path.append(os.path.join(image_metadata_dir, filename))
+    # Create a partial object with start epoch, end epoch, date field and date format fixed
+    prod_inp = partial(read_geojson_metadata, start_epoch=start_epoch,
+                       end_epoch=end_epoch, date_field=INPUT_DATE_FIELD, date_format=INPUT_DATE_FORMAT)
 
-    prod_inp = partial(read_geojson_metadata, start_epoch=start_epoch, end_epoch=end_epoch)
-
-    # create a process pool and pass list of files to read geoJSON metadata function
+    # Create a process pool and pass list of files to read geoJSON metadata function
     pool = Pool(processes=cpu_count())
-    wkt_list = pool.map(prod_inp, metadata_path)
+    wkt_list = pool.map(prod_inp, input_geojson_paths)
     pool.close()
     pool.join()
 
@@ -58,6 +54,6 @@ if __name__ == "__main__":
     logger.info("Reading GeoJSON metadata files...done")
 
     # Create geohash densities
-    polygon_gdf = density_geohash(flat_wkt_list)
+    polygon_gdf = density_geohash(flat_wkt_list, precision=6)
     polygon_gdf.to_file(output_geojson_path, driver='GeoJSON')
     logger.info("completed geohashing and counting points, output created...done")
