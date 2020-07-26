@@ -11,6 +11,16 @@ Input Points with a datestamp are supported and can be used to filter the heatma
 
 These instructions will get your copy of the project up and running on your local machine for development and testing purposes.
 
+## Sample data
+Sample input and output datasets are provided to demonstrate this functionality. This is a good starting point to understand the modules and how to prepare your own input datasets. 
+
+The sample includes:
+1) Two input point files - _LACollisions2012.geojson_ and _LACollisions2013.geojson_
+Credits - These datasets were derived from point features acquired from Los Angeles GeoHub Open Data. 
+The source dataset is named 'Collisions 2009-2013 (SWITRS)' and can be found in the GeoHub Open Data platform here: http://geohub.lacity.org/ 
+2) Output heatmap geohash polygon collection file - _geohash_density.geojson_
+
+---------------
 ### Setup
 
 1. Install Python 3.6+ 
@@ -65,13 +75,3 @@ geohash_mapper/docs/_build/html/index.html
 
 ---------------
 
-## Sample data
-Sample input and output datasets are provided to demonstrate this functionality. This is a good starting point to understand the modules and how to prepare your own input datasets. 
-
-The sample includes:
-1) Two input point files - _LACollisions2012.geojson_ and _LACollisions2013.geojson_
-Credits - These datasets were derived from point features acquired from Los Angeles GeoHub Open Data. 
-The source dataset is named 'Collisions 2009-2013 (SWITRS)' and can be found in the GeoHub Open Data platform here: http://geohub.lacity.org/ 
-2) Output heatmap geohash polygon collection file - _geohash_density.geojson_
-
----------------
