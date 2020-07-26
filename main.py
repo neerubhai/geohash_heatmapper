@@ -14,8 +14,8 @@ input_geojson_dir = os.path.join(os.getcwd(), r'sample_data')
 output_geojson_path = os.path.join(os.getcwd(), r'sample_data', r'geohash_density.geojson')
 START_DATE = "2012-01-20 UTC" # Start time to aggregate points
 END_DATE = "2013-10-20 UTC" # End time to aggregate points
-INPUT_DATE_FIELD = "COLLISION_" # This is a data dependent field which represents the date associated with a point
-INPUT_DATE_FORMAT = "%Y-%m-%d" # This is data dependent format of the date field of the input
+INPUT_DATE_FIELD = "COLLISION_" # Data dependent field representing the date associated to a point
+INPUT_DATE_FORMAT = "%Y-%m-%d" # Format of the date field (again data dependant)
 
 # create a logger to report
 logger = logging.getLogger()
@@ -41,7 +41,8 @@ if __name__ == "__main__":
 
     # Create a partial object with start epoch, end epoch, date field and date format fixed
     prod_inp = partial(read_geojson_metadata, start_epoch=start_epoch,
-                       end_epoch=end_epoch, date_field=INPUT_DATE_FIELD, date_format=INPUT_DATE_FORMAT)
+                       end_epoch=end_epoch, date_field=INPUT_DATE_FIELD,
+                       date_format=INPUT_DATE_FORMAT)
 
     # Create a process pool and pass list of files to read geoJSON metadata function
     pool = Pool(processes=cpu_count())
