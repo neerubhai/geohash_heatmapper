@@ -1,8 +1,8 @@
 Geohash Mapper Module
 =====================
 
-The contents of this project can be used to create heatmaps of geohash polygons as a GeoJSON collection file. Heatmaps represent count of input GeoJSON point files that fall within a geohash polygon's extents. 
-Point files with a datestamp are supported and can be used to filter the heatmap count aggregation by providing a date range.
+This project can be used to create a heatmap of geohash polygons as a GeoJSON collection file. Input GeoJSON point files that fall within a geohash polygon's extents are used to create these heatmaps. 
+Input Points with a datestamp are supported and can be used to filter the heatmap count aggregation by providing a date range.
 
 ---------------
 
@@ -48,6 +48,7 @@ This will kickstart the aggregration process from input point files and create a
 ```
 $ python main.py
 ```
+---------------
 
 ## Accessing doc
 Doc for the modules is located from this path as an html file. Open this file from a web browser.
@@ -55,10 +56,14 @@ Doc for the modules is located from this path as an html file. Open this file fr
 geohash_mapper/docs/_build/html/index.html
 ```
 
+---------------
+
 ## Visualizing the output
 
 - Quickest way to visualize the output is using HERE's GeoJSON web mapper that can be found here: http://geojson.tools/
 - Copy paste the contents of the output geojson file to the 'Editor' or upload the GeoJSON file.
+
+---------------
 
 ## Sample data
 Sample input and output datasets are provided to demonstrate this functionality. This is a good starting point to understand the modules and how to prepare your own input datasets. 
@@ -69,4 +74,4 @@ Credits - These datasets were derived from point features acquired from Los Ange
 The source dataset is named 'Collisions 2009-2013 (SWITRS)' and can be found in the GeoHub Open Data platform here: http://geohub.lacity.org/ 
 2) Output heatmap geohash polygon collection file - _geohash_density.geojson_
 
-
+---------------
