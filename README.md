@@ -2,7 +2,7 @@ Geohash Mapper Module
 =====================
 
 This project can be used to create a heatmap of geohash polygons as a GeoJSON collection file. Input GeoJSON point files that fall within a geohash polygon's extents are used to create these heatmaps. 
-Input Points with a datestamp are supported and can be used to filter the heatmap count aggregation by providing a date range.
+Input Points with a datestamp are supported and can be used to filter the heatmap count aggregation by providing a date range. Multiprocessing is leveraged to process multiple input files parallely improving overall processing time. 
 
 ---------------
 
