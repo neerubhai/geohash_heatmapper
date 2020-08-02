@@ -1,8 +1,7 @@
 Geohash Mapper Module
 =====================
 
-This project can be used to create a heatmap of geohash polygons as a GeoJSON collection file. Input GeoJSON point files that fall within a geohash polygon's extents are used to create these heatmaps. 
-Input Points with a datestamp are supported and can be used to filter the heatmap count aggregation by providing a date range. Multiprocessing is leveraged to process multiple input files parallely improving overall processing time. 
+This project can be used to create a heatmap of spatial point data. Geohash polygons are used to represent heatmaps and are stored as a GeoJSON collection file. Input spatial point in GeoJSON format can be used by this module. Input points that lie within a geohash polygon's spatial extents are counted and used to create these heatmaps. A temporal filter can be applied to the heatmap creation process, if the point data has a date field associated to it. The date field is usually stored in the point metadata (see sample data provided with this module in the 'sample_data/' folder). Multiprocessing is leveraged to process multiple input files parallely improving overall processing time. 
 
 ---------------
 
