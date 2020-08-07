@@ -71,7 +71,8 @@ geohash_mapper/docs/_build/html/index.html
 ## Visualizing the output
 
 - Quickest way to visualize the output is using HERE's GeoJSON web mapper that can be found here: http://geojson.tools/
-- Copy paste the contents of the output geojson file to the 'Editor' or upload the GeoJSON file.
+- Copy paste the contents of the output geojson file to the 'Editor' or upload the GeoJSON file. 
+You can try it out with the sample output data from this file in this repo: '/sample_data/geohash_density.geojson'
 
 ![alt text](https://github.com/neerubhai/geohash_heatmapper/blob/master/sample_data/geohash_heatmap_sampledata.png)
 ---------------
