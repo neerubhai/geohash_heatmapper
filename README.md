@@ -1,3 +1,4 @@
+
 Geohash Mapper Module
 =====================
 
@@ -72,5 +73,6 @@ geohash_mapper/docs/_build/html/index.html
 - Quickest way to visualize the output is using HERE's GeoJSON web mapper that can be found here: http://geojson.tools/
 - Copy paste the contents of the output geojson file to the 'Editor' or upload the GeoJSON file.
 
+![alt text](https://github.com/neerubhai/geohash_heatmapper/blob/master/sample_data/geohash_heatmap_sampledata.png)
 ---------------
 
